@@ -1,4 +1,4 @@
-FROM centos:7
+FROM bluedata/centos7:latest
 LABEL maintainer="dietrich.zinsou@hpe.com"
 
 RUN yum install -y epel-release
@@ -17,7 +17,7 @@ RUN su - dataiku -c "rm -rf /opt/dataiku/dataiku-dss-6.0.4.tar.gz"
 
 COPY hdp.repo /etc/yum.repos.d/hdp.repo
 RUN yum install -y hadoop-client
-RUN su - dataiku -c "/opt/dataiku/dss-6.0.4/bin/dssadmin install-hadoop-integration"
+RUN su -p - dataiku -c "export JAVA_HOME=/usr/lib/jvm/jre-openjdk/ && /opt/dataiku/dss-6.0.4/bin/dssadmin install-hadoop-integration"
 
 WORKDIR /opt/dataiku/
 USER dataiku
