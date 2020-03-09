@@ -19,6 +19,14 @@ COPY hdp.repo /etc/yum.repos.d/hdp.repo
 RUN yum install -y hadoop-client
 RUN su -p - dataiku -c "export JAVA_HOME=/usr/lib/jvm/jre-openjdk/ && /opt/dataiku/dss-6.0.4/bin/dssadmin install-hadoop-integration"
 
+COPY bluedata /opt/bluedata
+COPY hadoop/conf/core-site.xml /etc/hadoop/conf/core-site.xml
+COPY hadoop/conf/hdfs-site.xml /etc/hadoop/conf/hdfs-site.xml
+COPY hadoop/conf/hadoop-env.sh /etc/hadoop/conf/hadoop-env.sh
+COPY hadoop/conf/hadoop-env.cmd /etc/hadoop/conf/hadoop-env.cmd
+RUN chmod -R 644 /opt/bluedata/bluedata-dtap.jar
+RUN chmod -R 755 /opt/bluedata/libjni_memq_cnode.so
+
 WORKDIR /opt/dataiku/
 USER dataiku
 
