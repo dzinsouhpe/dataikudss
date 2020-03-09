@@ -7,6 +7,8 @@ spec:
   roles:
   - id: dssnode
     members: 1
+    podLabels:
+      hpecp.hpe.com/dtap: inject
     resources:
       requests:
         memory: "4Gi"
