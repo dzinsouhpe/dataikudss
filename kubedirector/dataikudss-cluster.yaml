@@ -8,6 +8,7 @@ spec:
   - id: dssnode
     members: 1
     podLabels:
+      hpecp.hpe.com/role: mlops
       hpecp.hpe.com/dtap: inject
     resources:
       requests:

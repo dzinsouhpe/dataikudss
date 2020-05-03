@@ -6,7 +6,7 @@ spec:
   label:
     name: Dataiku DSS 6.0.4
     description: Dataiku DSS 6.0.4 on centos 7.x
-  distroID: dzinsou/dataikudss
+  distroID: dzinsouhpe/dataikudss
   version: '6.0.4'
   configSchemaVersion: 7
   services:
@@ -36,3 +36,5 @@ spec:
       - ssh
       - dss
   systemdRequired: true
+  defaultPersistDirs:
+  - /opt/dataiku/data

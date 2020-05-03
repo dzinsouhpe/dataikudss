@@ -12,7 +12,6 @@ RUN mkdir /opt/dataiku
 RUN chown dataiku:dataiku /opt/dataiku
 RUN su - dataiku -c "cd /opt/dataiku && wget https://cdn.downloads.dataiku.com/public/dss/6.0.4/dataiku-dss-6.0.4.tar.gz"
 RUN su - dataiku -c "cd /opt/dataiku && tar xzf dataiku-dss-6.0.4.tar.gz"
-RUN su - dataiku -c "cd /opt/dataiku && dataiku-dss-6.0.4/installer.sh -d /opt/dataiku/dss-6.0.4 -p 11000"
 RUN su - dataiku -c "rm -rf /opt/dataiku/dataiku-dss-6.0.4.tar.gz"
 
 COPY hdp.repo /etc/yum.repos.d/hdp.repo
@@ -26,11 +25,11 @@ COPY hadoop/conf/hadoop-env.cmd /etc/hadoop/conf/hadoop-env.cmd
 RUN chmod -R 644 /opt/bluedata/bluedata-dtap.jar
 RUN chmod -R 755 /opt/bluedata/libjni_memq_cnode.so
 
-RUN su -p - dataiku -c "export JAVA_HOME=/usr/lib/jvm/jre-openjdk/ && /opt/dataiku/dss-6.0.4/bin/dssadmin install-hadoop-integration"
-
 WORKDIR /opt/dataiku/
-USER dataiku
+
+COPY start-dss.sh /opt/dataiku/start-dss.sh
+COPY entrypoint.sh /opt/dataiku/entrypoint.sh
 
 EXPOSE 11000
 
-ENTRYPOINT ["/opt/dataiku/dss-6.0.4/bin/dss", "run"]
+ENTRYPOINT ["/opt/dataiku/entrypoint.sh"]
